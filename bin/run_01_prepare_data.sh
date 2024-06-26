@@ -32,5 +32,5 @@ unzip $RAW_DATA_DIR/*.csv*
 cp $RAW_DATA_DIR/*.csv* $CLEAN_DATA_DIR/
 
 # Prepare images and metadata
-python scripts/prepare_meta_dicom.py
-python scripts/prepare_folds.py
+python3 scripts/prepare_meta_dicom.py
+python3 scripts/prepare_folds.py
