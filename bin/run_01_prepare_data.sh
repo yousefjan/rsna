@@ -2,7 +2,7 @@
 # Clone repo https://github.com/darraghdog/rsna and set the location as ROOT directory
 ROOT='/mnt/ebs_volume/rsna'
 RAW_DATA_DIR=$ROOT/data/raw
-# CLEAN_DATA_DIR=$ROOT/data
+CLEAN_DATA_DIR=$ROOT/data
 CKPTDIR=$ROOT/checkpoints
 CKPTURL='https://darraghdog1.s3-eu-west-1.amazonaws.com/resnext101_32x8d_wsl_checkpoint.pth'
 
