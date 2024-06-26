@@ -1,9 +1,8 @@
 # Parameters
 # Clone repo https://github.com/darraghdog/rsna and set the location as ROOT directory
-ROOT='/mnt/lsf/share/dhanley2/rsna'
-ROOT='/data/submit/rsna'
+ROOT='/mnt/ebs_volume/rsna'
 RAW_DATA_DIR=$ROOT/data/raw
-CLEAN_DATA_DIR=$ROOT/data
+# CLEAN_DATA_DIR=$ROOT/data
 CKPTDIR=$ROOT/checkpoints
 CKPTURL='https://darraghdog1.s3-eu-west-1.amazonaws.com/resnext101_32x8d_wsl_checkpoint.pth'
 
@@ -23,10 +22,10 @@ cd $CKPTDIR
 wget $CKPTURL  -O resnext101_32x8d_wsl_checkpoint.pth
 cd $ROOT
 
-# Unzip competition data 
-cd $RAW_DATA_DIR
-unzip -qq rsna-intracranial-hemorrhage-detection.zip
-cd $ROOT
+# # Unzip competition data 
+# cd $RAW_DATA_DIR
+# unzip -qq rsna-intracranial-hemorrhage-detection.zip
+# cd $ROOT
 
 # Copy csv files to data directory
 unzip $RAW_DATA_DIR/*.csv* 
