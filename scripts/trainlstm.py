@@ -19,10 +19,10 @@ from torch.utils.data import DataLoader
 from scipy.ndimage import uniform_filter
 from torch.optim.lr_scheduler import StepLR
 
-from apex.parallel import DistributedDataParallel as DDP
-from apex.fp16_utils import *
-from apex import amp, optimizers
-from apex.multi_tensor_apply import multi_tensor_applier
+#from apex.parallel import DistributedDataParallel as DDP
+#from apex.fp16_utils import *
+#from apex import amp, optimizers
+#from apex.multi_tensor_apply import multi_tensor_applier
 
 # Print info about environments
 parser = optparse.OptionParser()
@@ -60,11 +60,11 @@ from utils import dumpobj, loadobj, GradualWarmupScheduler
 logger = get_logger(options.logmsg, 'INFO') # noqa
 logger.info('Cuda set up : time {}'.format(datetime.datetime.now().time()))
 
-device=torch.device('cuda')
-logger.info('Device : {}'.format(torch.cuda.get_device_name(0)))
-logger.info('Cuda available : {}'.format(torch.cuda.is_available()))
-n_gpu = torch.cuda.device_count()
-logger.info('Cuda n_gpus : {}'.format(n_gpu ))
+device=torch.device('cpu')
+#logger.info('Device : {}'.format(torch.cuda.get_device_name(0)))
+#logger.info('Cuda available : {}'.format(torch.cuda.is_available()))
+#n_gpu = torch.cuda.device_count()
+#logger.info('Cuda n_gpus : {}'.format(n_gpu ))
 
 
 logger.info('Load params : time {}'.format(datetime.datetime.now().time()))
@@ -336,7 +336,7 @@ plist = [
     ]
 optimizer = optim.Adam(plist, lr=lr)
 scheduler = StepLR(optimizer, 1, gamma=lrgamma, last_epoch=-1)
-model, optimizer = amp.initialize(model, optimizer, opt_level="O1")
+#model, optimizer = amp.initialize(model, optimizer, opt_level="O1")
 
 ypredls = []
 ypredtstls = []
@@ -362,8 +362,9 @@ for epoch in range(EPOCHS):
         
         tr_loss += loss.item()
         optimizer.zero_grad()
-        with amp.scale_loss(loss, optimizer) as scaled_loss:
-            scaled_loss.backward()
+        #with amp.scale_loss(loss, optimizer) as scaled_loss:
+        #    scaled_loss.backward()
+        loss.backward()
         optimizer.step()
         if step%1000==0:
             logger.info('Trn step {} of {} trn lossavg {:.5f}'. \
