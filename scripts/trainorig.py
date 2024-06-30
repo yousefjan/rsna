@@ -46,12 +46,11 @@ from albumentations import (Cutout, Compose, Normalize, RandomRotate90, Horizont
                            )
 
 from tqdm import tqdm
-from apex import amp
 
-from apex.parallel import DistributedDataParallel as DDP
-from apex.fp16_utils import *
-from apex import amp, optimizers
-from apex.multi_tensor_apply import multi_tensor_applier
+#from apex.parallel import DistributedDataParallel as DDP
+#from apex.fp16_utils import *
+#from apex import amp, optimizers
+#from apex.multi_tensor_apply import multi_tensor_applier
 
 
 import warnings
@@ -284,7 +283,7 @@ def criterion(data, targets, criterion = torch.nn.BCEWithLogitsLoss()):
 plist = [{'params': model.parameters(), 'lr': lr}]
 optimizer = optim.Adam(plist, lr=lr)
 
-model, optimizer = amp.initialize(model, optimizer, opt_level="O1")
+#model, optimizer = amp.initialize(model, optimizer, opt_level="O1")
 
 model = torch.nn.DataParallel(model, device_ids=list(range(n_gpu)))
 
@@ -305,8 +304,9 @@ for epoch in range(n_epochs):
             labels = labels.to(device, dtype=torch.float)
             outputs = model(inputs)
             loss = criterion(outputs, labels)
-            with amp.scale_loss(loss, optimizer) as scaled_loss:
-                scaled_loss.backward()
+            #with amp.scale_loss(loss, optimizer) as scaled_loss:
+            #    scaled_loss.backward()
+            loss.backward()
             tr_loss += loss.item()
             optimizer.step()
             optimizer.zero_grad()
